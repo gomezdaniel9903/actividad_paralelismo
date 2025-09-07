@@ -1,18 +1,55 @@
-# 🧠 Proyecto de Paralelismo en Python
+🧠 Proyecto de Paralelismo en Python
+===================================
 
 Este proyecto implementa diferentes enfoques de paralelismo para la multiplicación de matrices en Python.
 
----
+-----------------------------------
 
-## ⚙️ Configuración del entorno
+⚙️ Configuración del entorno
+----------------------------
 
 Se recomienda usar un entorno virtual para manejar las dependencias de forma aislada.
 
-### 1. Crear un entorno virtual
+1. Crear un entorno virtual
 
-```bash
-python -m venv venv
+    python -m venv venv
 
-### 2. Activar el entorno virtual
-```bash
-Para Windows venv\Scripts\activate
+2. Activar el entorno virtual
+
+    - En Windows:
+
+        venv\Scripts\activate
+
+    - En Linux/macOS:
+
+        source venv/bin/activate
+
+3. Instalar dependencias
+
+    pip install -r requirements.txt
+
+-----------------------------------
+
+🚀 Ejecutar el programa principal
+---------------------------------
+
+Una vez activado el entorno y con las dependencias instaladas, ejecuta:
+
+    python main.py
+
+-----------------------------------
+
+📂 Estructura esperada del proyecto
+-----------------------------------
+
+    Proyecto/
+    ├── main.py
+    ├── requirements.txt
+    ├── README.md
+    └── src/
+        ├── SolucionThreads.py
+        ├── SolucionMultiprocessors.py
+        └── mpiprocessing.py
+
+-----------------------------------
+
