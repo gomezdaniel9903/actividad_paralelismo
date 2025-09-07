@@ -12,3 +12,7 @@ Se recomienda usar un entorno virtual para manejar las dependencias de forma ais
 
 ```bash
 python -m venv venv
+
+### 2. Activar el entorno virtual
+```bash
+Para Windows venv\Scripts\activate
