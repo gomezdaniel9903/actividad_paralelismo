@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import subprocess
 import os
+import sys
 plt.style.use('ggplot')
 
 if __name__ == '__main__':
@@ -12,10 +13,10 @@ if __name__ == '__main__':
     times_solucion_multihilos = solucion_multihilos()
     times_solucion_multiprocessing = solucion_multiprocessors()
     path_solution_mpi = './src/SolucionMPI.py'
-    subprocess.run(['mpiexec', '-n', '2', 'python', path_solution_mpi],check=True)
-    subprocess.run(['mpiexec', '-n', '4', 'python', path_solution_mpi],check=True)
-    subprocess.run(['mpiexec', '-n', '6', 'python', path_solution_mpi],check=True)
-    subprocess.run(['mpiexec', '-n', '8', 'python', path_solution_mpi],check=True)
+    subprocess.run(['mpiexec', '-n', '2', sys.executable, path_solution_mpi],check=True)
+    subprocess.run(['mpiexec', '-n', '4', sys.executable, path_solution_mpi],check=True)
+    subprocess.run(['mpiexec', '-n', '6', sys.executable, path_solution_mpi],check=True)
+    subprocess.run(['mpiexec', '-n', '8', sys.executable, path_solution_mpi],check=True)
 
     times_solution_mpi = []
     file_path = "resultado_mpi.txt"
