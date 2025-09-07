@@ -28,6 +28,8 @@ Se recomienda usar un entorno virtual para manejar las dependencias de forma ais
 
     pip install -r requirements.txt
 
+4. Es obligatorio tener instalado el MPI en el sistema para correr el proyecto.
+
 -----------------------------------
 
 🚀 Ejecutar el programa principal
