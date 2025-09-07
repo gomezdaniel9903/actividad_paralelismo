@@ -37,7 +37,7 @@ Se recomienda usar un entorno virtual para manejar las dependencias de forma ais
 
 Una vez activado el entorno y con las dependencias instaladas, ejecuta:
 
-    python main.py
+    python main.py ó python3 main.py
 
 -----------------------------------
 
