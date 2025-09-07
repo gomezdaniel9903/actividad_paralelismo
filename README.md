@@ -47,9 +47,11 @@ Una vez activado el entorno y con las dependencias instaladas, ejecuta:
     ├── requirements.txt
     ├── README.md
     └── src/
-        ├── SolucionThreads.py
+        ├── __init__.py
+        ├── SolucionMultihilos.py
         ├── SolucionMultiprocessors.py
-        └── mpiprocessing.py
+        ├── SolucionMPI.py
+        └── SolucionSecuencial.py
 
 -----------------------------------
 
