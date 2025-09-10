@@ -49,14 +49,14 @@ if __name__ == '__main__':
     plt.plot(n_hilos, acel_multiprocessing)
     plt.xticks(n_hilos)
     plt.ylabel(y_label)
-    plt.xlabel("Número de procesadores [n]")
+    plt.xlabel("Número de procesos [n]")
 
     plt.figure() ##Para separar figuras
 
     plt.plot(n_hilos, acel_mpi)
     plt.xticks(n_hilos)
     plt.ylabel(y_label)
-    plt.xlabel("Número de procesadores MPI [n]")
+    plt.xlabel("Número de nodos MPI [n]")
 
     plt.figure() ##Para separar figuras
 
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     
     plt.xticks(n_hilos)
     plt.ylabel(y_label)
-    plt.xlabel("Número de hilos/procesadores/procesadores MPI [n]")
+    plt.xlabel("Número de hilos/procesos/nodos MPI [n]")
     plt.legend()
 
     plt.show()
