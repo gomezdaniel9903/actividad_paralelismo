@@ -35,9 +35,9 @@ Se recomienda usar un entorno virtual para manejar las dependencias de forma ais
 🚀 Ejecutar el programa principal
 ---------------------------------
 
-Una vez activado el entorno y con las dependencias instaladas, ejecuta:
+Una vez activado el entorno y con las dependencias instaladas, ejecuta, 1500 es el argumento para la dimensión de las matrices:
 
-    python main.py
+    python main.py 1500
     
 En caso de tener python3 se utilizaría el comando anterior con python3
 

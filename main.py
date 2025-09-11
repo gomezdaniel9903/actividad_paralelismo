@@ -32,47 +32,118 @@ if __name__ == '__main__':
 
     os.remove(file_path)
 
-    t_1 = 8 # Tiempo que emplea el algoritmo ejecutandose en un solo hilo
-    n_hilos = np.array([1,2,4,6,8])
+########### Tiempos de ejecución y sus respectivas gráficas ##############
+    t_1 = 8 # Tiempo que emplea el algoritmo ejecutandose secuencial
+    n_hilos_procesos = np.array([1,2,4,6,8])
     t_paralelo_hilos = np.array([elapsed_time_secuential]+times_solucion_multihilos)
     t_paralelo_multiprocessing = np.array([elapsed_time_secuential]+times_solucion_multiprocessing)
     t_paralelo_mpi = np.array([elapsed_time_secuential]+times_solution_mpi)
 
+    y_label = "Tiempo Ejecución (s)"
+    plt.plot(n_hilos_procesos, t_paralelo_hilos)
+    plt.xticks(n_hilos_procesos)
+    plt.ylabel(y_label)
+    plt.xlabel("Número de hilos [n]")
+    plt.title('Tiempo Ejecución (s) Estrategia Multihilos')
+    plt.figure() ##Para separar figuras
 
+    plt.plot(n_hilos_procesos, t_paralelo_multiprocessing)
+    plt.xticks(n_hilos_procesos)
+    plt.ylabel(y_label)
+    plt.xlabel("Número de procesos [n]")
+    plt.title('Tiempo Ejecución (s) Estrategia Multiprocessing')
+    plt.figure() ##Para separar figuras
 
-    # Miremos gráficamente el comportamiento.
+    plt.plot(n_hilos_procesos, t_paralelo_mpi)
+    plt.xticks(n_hilos_procesos)
+    plt.ylabel(y_label)
+    plt.xlabel("Número de nodos(procesos) MPI [n]")
+    plt.title('Tiempo Ejecución (s) Estrategia MPI')
+    plt.figure() ##Para separar figuras
+
+    plt.plot(n_hilos_procesos, t_paralelo_hilos, label ="Multithreads")
+    plt.plot(n_hilos_procesos, t_paralelo_multiprocessing, label ="Multiprocessing")
+    plt.plot(n_hilos_procesos, t_paralelo_mpi, label ="MPI")
+    
+    plt.xticks(n_hilos_procesos)
+    plt.ylabel(y_label)
+    plt.xlabel("Número de hilos/procesos/procesos MPI [n]")
+    plt.title('Comparación Tiempo Ejecución (s) Estrategias Paralelas')
+    plt.legend()
+    plt.figure() ##Para separar figuras
+########### Cálculo de la Aceleración y sus respectivas gráficas ##############
     acel = elapsed_time_secuential / t_paralelo_hilos
     acel_multiprocessing = elapsed_time_secuential / t_paralelo_multiprocessing
     acel_mpi = elapsed_time_secuential / t_paralelo_mpi
+
+    print("Aceleración máxima hilos:", max(acel))
+    print("Aceleración máxima multiprocessing:", max(acel_multiprocessing))
+    print("Aceleración máxima MPI:", max(acel_mpi))
+
     y_label = "Aceleración [X]"
-    plt.plot(n_hilos, acel)
-    plt.xticks(n_hilos)
+    plt.plot(n_hilos_procesos, acel)
+    plt.xticks(n_hilos_procesos)
     plt.ylabel(y_label)
     plt.xlabel("Número de hilos [n]")
-
+    plt.title('Aceleración [X] Estrategia Multihilos')
     plt.figure() ##Para separar figuras
 
-    plt.plot(n_hilos, acel_multiprocessing)
-    plt.xticks(n_hilos)
+    plt.plot(n_hilos_procesos, acel_multiprocessing)
+    plt.xticks(n_hilos_procesos)
     plt.ylabel(y_label)
     plt.xlabel("Número de procesos [n]")
-
+    plt.title('Aceleración [X] Estrategia Multiprocessing')
     plt.figure() ##Para separar figuras
 
-    plt.plot(n_hilos, acel_mpi)
-    plt.xticks(n_hilos)
+    plt.plot(n_hilos_procesos, acel_mpi)
+    plt.xticks(n_hilos_procesos)
     plt.ylabel(y_label)
     plt.xlabel("Número de nodos(procesos) MPI [n]")
-
+    plt.title('Aceleración [X] Estrategia MPI')
     plt.figure() ##Para separar figuras
 
-    plt.plot(n_hilos, acel, label ="Multithreads")
-    plt.plot(n_hilos, acel_multiprocessing, label ="Multiprocessing")
-    plt.plot(n_hilos, acel_mpi, label ="MPI")
+    plt.plot(n_hilos_procesos, acel, label ="Multithreads")
+    plt.plot(n_hilos_procesos, acel_multiprocessing, label ="Multiprocessing")
+    plt.plot(n_hilos_procesos, acel_mpi, label ="MPI")
     
-    plt.xticks(n_hilos)
+    plt.xticks(n_hilos_procesos)
     plt.ylabel(y_label)
     plt.xlabel("Número de hilos/procesos/procesos MPI [n]")
+    plt.title('Comparación Aceleración [X] Estrategias Paralelas')
     plt.legend()
+    plt.figure() ##Para separar figuras
 
+    ########### Cálculo de la Eficiencia y sus respectivas gráficas ##############
+    eficiencia_hilos = acel/n_hilos_procesos
+    eficiencia_multiprocessing = acel_multiprocessing/n_hilos_procesos
+    eficiencia_mpi = acel_mpi/n_hilos_procesos
+    print("Eficiencia hilos:",eficiencia_hilos)
+    print("Eficiencia multiprocessing:",eficiencia_multiprocessing)
+    print("Eficiencia MPI:",eficiencia_mpi)
+    y_label = "Eficiencia"
+    plt.plot(n_hilos_procesos,eficiencia_hilos,'-o')
+    plt.xlabel('Número de hilos')
+    plt.ylabel(y_label)
+    plt.title('Eficiencia de un algoritmo paralelo Multihilos')
+    plt.figure() ##Para separar figuras
+    plt.plot(n_hilos_procesos,eficiencia_multiprocessing,'-o')
+    plt.xlabel('Número de procesos')
+    plt.ylabel(y_label)
+    plt.title('Eficiencia de un algoritmo paralelo Multiprocessing')
+    plt.figure() ##Para separar figuras
+    plt.plot(n_hilos_procesos,eficiencia_mpi,'-o')
+    plt.xlabel('Número de procesos MPI')
+    plt.ylabel(y_label)
+    plt.title('Eficiencia de un algoritmo paralelo MPI')
+    plt.figure() ##Para separar figuras
+
+    plt.plot(n_hilos_procesos, eficiencia_hilos, label ="Multithreads")
+    plt.plot(n_hilos_procesos, eficiencia_multiprocessing, label ="Multiprocessing")
+    plt.plot(n_hilos_procesos, eficiencia_mpi, label ="MPI")
+    
+    plt.xticks(n_hilos_procesos)
+    plt.ylabel(y_label)
+    plt.xlabel("Número de hilos/procesos/procesos MPI [n]")
+    plt.title('Comparación Eficiencias Estrategias Paralelas')
+    plt.legend()
     plt.show()
