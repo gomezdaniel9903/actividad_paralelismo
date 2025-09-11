@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import random
 import time
+import sys
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -39,27 +40,29 @@ def generate_random_matrix(rows, cols):
     matrix = [[random.random() for _ in range(cols)] for _ in range(rows)]
     return matrix
 
-def dividir_chunks(num_threads,matrix_size,matrix):
-    x = matrix_size//num_threads
+def dividir_chunks(num_procesos,matrix_size,matrix):
+    x = matrix_size//num_procesos
     chunks = []
-    for i in range(num_threads - 1):
+    for i in range(num_procesos - 1):
         chunks.append(matrix[x*i:x*i + x])
-    chunks.append(matrix[(num_threads - 1)*x:])
+    chunks.append(matrix[(num_procesos - 1)*x:])
     return chunks
 
 
 if rank == 0:
     # Pueden ajustar este valor si su máquina tiene más o menos recursos.
     # ¡Cuidado con valores muy grandes que puedan colgar su sistema!
-    MATRIX_SIZE = 500
+    matrix_size = 1500
+    if len(sys.argv) > 1:
+        matrix_size = int(sys.argv[1])
 
-    print(f"Generando matrices aleatorias de {MATRIX_SIZE}x{MATRIX_SIZE}...")
+    print(f"Generando matrices aleatorias de {matrix_size}x{matrix_size}...")
 
     # Generar las dos matrices a multiplicar
-    matrix_A = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-    matrix_B = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-    chunks_A = dividir_chunks(ntasks,MATRIX_SIZE,matrix_A)
-    print("Matrices generadas. Iniciando multiplicación paralelo multihilos...")
+    matrix_A = generate_random_matrix(matrix_size, matrix_size)
+    matrix_B = generate_random_matrix(matrix_size, matrix_size)
+    chunks_A = dividir_chunks(ntasks,matrix_size,matrix_A)
+    print(f"Matrices generadas. Iniciando multiplicación paralelo MPI, numero procesos {ntasks} ...")
     # Medir el tiempo de ejecución
     start_time = time.time()
     for i in range(1,ntasks):
@@ -82,7 +85,7 @@ if rank == 0:
 
 
 
-    print(f"La multiplicación secuencial ha finalizado.")
+    print(f"La multiplicación MPI ha finalizado.")
     print(f"Tiempo total de ejecución: {elapsed_time:.4f} segundos.")
 
     with open("resultado_mpi.txt", "a") as f:

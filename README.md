@@ -53,7 +53,7 @@ En caso de tener python3 se utilizaría el comando anterior con python3
     └── src/
         ├── __init__.py
         ├── SolucionMultihilos.py
-        ├── SolucionMultiprocessors.py
+        ├── SolucionMultiprocessing.py
         ├── SolucionMPI.py
         └── SolucionSecuencial.py
 

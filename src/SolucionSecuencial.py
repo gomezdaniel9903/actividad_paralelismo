@@ -33,17 +33,16 @@ def generate_random_matrix(rows, cols):
         """Genera una matriz con valores flotantes aleatorios entre 0 y 1."""
         matrix = [[random.random() for _ in range(cols)] for _ in range(rows)]
         return matrix
-def solucion_secuencial():
+def solucion_secuencial(matrix_size):
         
     # Pueden ajustar este valor si su máquina tiene más o menos recursos.
     # ¡Cuidado con valores muy grandes que puedan colgar su sistema!
-    MATRIX_SIZE = 500
     
-    print(f"Generando matrices aleatorias de {MATRIX_SIZE}x{MATRIX_SIZE}...")
+    print(f"Generando matrices aleatorias de {matrix_size}x{matrix_size}...")
     
     # Generar las dos matrices a multiplicar
-    matrix_A = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-    matrix_B = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
+    matrix_A = generate_random_matrix(matrix_size, matrix_size)
+    matrix_B = generate_random_matrix(matrix_size, matrix_size)
     
     print("Matrices generadas. Iniciando multiplicación secuencial...")
     

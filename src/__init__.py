@@ -1,3 +1,3 @@
 from .SolucionSecuencial import solucion_secuencial
 from .SolucionMultihilos import solucion_multihilos
-from .SolucionMultiprocessors import solucion_multiprocessors
+from .SolucionMultiprocessing import solucion_multiprocessing

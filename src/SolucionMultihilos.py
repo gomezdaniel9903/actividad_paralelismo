@@ -44,22 +44,21 @@ def dividir_chunks(num_threads,matrix_size,matrix):
     chunks.append(matrix[(num_threads - 1)*x:])
     return chunks
 
-def solucion_multihilos():
+def solucion_multihilos(matrix_size):
     global resultado
     # Pueden ajustar este valor si su máquina tiene más o menos recursos.
     # ¡Cuidado con valores muy grandes que puedan colgar su sistema!
-    MATRIX_SIZE = 500
     
-    print(f"Generando matrices aleatorias de {MATRIX_SIZE}x{MATRIX_SIZE}...")
+    print(f"Generando matrices aleatorias de {matrix_size}x{matrix_size}...")
     
     # Generar las dos matrices a multiplicar
     times = []
     resultados = []
     for num_threads in [2,4,6,8]:
-        matrix_A = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-        matrix_B = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-        chunks_A = dividir_chunks(num_threads,MATRIX_SIZE,matrix_A)
-        print("Matrices generadas. Iniciando multiplicación paralelo multihilos...")
+        matrix_A = generate_random_matrix(matrix_size, matrix_size)
+        matrix_B = generate_random_matrix(matrix_size, matrix_size)
+        chunks_A = dividir_chunks(num_threads,matrix_size,matrix_A)
+        print(f"Matrices generadas. Iniciando multiplicación paralelo multihilos, numero de hilos {num_threads}...")
         threads = []
         
      
@@ -86,7 +85,7 @@ def solucion_multihilos():
         resultados.append(matrix_global)
         
         
-        print(f"La multiplicación secuencial ha finalizado.")
+        print(f"La multiplicación paralela multihilos ha finalizado.")
         print(f"Tiempo total de ejecución: {elapsed_time:.4f} segundos.")
         resultado = {}
     return times

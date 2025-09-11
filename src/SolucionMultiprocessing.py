@@ -44,41 +44,40 @@ def generate_random_matrix(rows, cols):
     matrix = [[random.random() for _ in range(cols)] for _ in range(rows)]
     return matrix
 
-def dividir_chunks(num_threads,matrix_size,matrix):
-    x = matrix_size//num_threads
+def dividir_chunks(num_procesos,matrix_size,matrix):
+    x = matrix_size//num_procesos
     chunks = []
-    for i in range(num_threads - 1):
+    for i in range(num_procesos - 1):
         chunks.append(matrix[x*i:x*i + x])
-    chunks.append(matrix[(num_threads - 1)*x:])
+    chunks.append(matrix[(num_procesos - 1)*x:])
     return chunks
 
-def solucion_multiprocessors():
-    manager = Manager() ##ESTUDIAR ESTA PARTE PARA EXPLICARLO
+def solucion_multiprocessing(matrix_size):
+    manager = Manager()
     resultado = manager.dict()
     # Pueden ajustar este valor si su máquina tiene más o menos recursos.
     # ¡Cuidado con valores muy grandes que puedan colgar su sistema!
-    MATRIX_SIZE = 500
     
-    print(f"Generando matrices aleatorias de {MATRIX_SIZE}x{MATRIX_SIZE}...")
+    print(f"Generando matrices aleatorias de {matrix_size}x{matrix_size}...")
     times = []
     resultados = []
     # Generar las dos matrices a multiplicar
-    for num_processors in [2,4,6,8]:
-        matrix_A = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-        matrix_B = generate_random_matrix(MATRIX_SIZE, MATRIX_SIZE)
-        chunks_A = dividir_chunks(num_processors,MATRIX_SIZE,matrix_A)
-        print("Matrices generadas. Iniciando multiplicación paralelo multihilos...")
-        processors = []
+    for num_procesos in [2,4,6,8]:
+        matrix_A = generate_random_matrix(matrix_size, matrix_size)
+        matrix_B = generate_random_matrix(matrix_size, matrix_size)
+        chunks_A = dividir_chunks(num_procesos,matrix_size,matrix_A)
+        print(f"Matrices generadas. Iniciando multiplicación paralelo multiprocesos, numero procesos {num_procesos}...")
+        procesos = []
         
         # Medir el tiempo de ejecución
         start_time = time.time()
-        for processor in range(num_processors):
-            p = multiprocessing.Process(target=sequential_matrix_multiplication, name='Procesador {}'.format(str(processor)), args=(chunks_A[processor],matrix_B,processor,resultado))
-            processors.append(p)
+        for proceso in range(num_procesos):
+            p = multiprocessing.Process(target=sequential_matrix_multiplication, name='Proceso {}'.format(str(proceso)), args=(chunks_A[proceso],matrix_B,proceso,resultado))
+            procesos.append(p)
             p.start()
     
-        for processor in processors:
-            processor.join()
+        for proceso in procesos:
+            proceso.join()
     
         matrix_global = []
         keys = list(resultado.keys())
@@ -96,7 +95,7 @@ def solucion_multiprocessors():
         
         resultados.append(matrix_global)
         
-        print(f"La multiplicación secuencial ha finalizado.")
+        print(f"La multiplicación paralela multiprocessing ha finalizado.")
         print(f"Tiempo total de ejecución: {elapsed_time:.4f} segundos.")
         
         resultado = manager.dict()
